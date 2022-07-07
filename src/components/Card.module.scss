@@ -1,0 +1,13 @@
+@use "../styles/variables" as v;
+@use "../styles/mixins" as mixin;
+
+.card {
+    background-color: rgb(248, 78, 78);
+    padding: 1rem;
+    color: v.$white;
+
+    &__header {
+        display: flex;
+        align-items: flex-end;
+    }
+}

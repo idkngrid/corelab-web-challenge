@@ -1,5 +1,7 @@
 export function Filter() {
     return (
-        <h1>Filter</h1>
+        <div>
+            <h1>Filter</h1>
+        </div>
     )
 }

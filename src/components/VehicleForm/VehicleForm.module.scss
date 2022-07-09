@@ -1,5 +1,5 @@
-@use "../styles/variables" as v;
-@use "../styles/mixins" as mixin;
+@use "../../styles/variables" as v;
+@use "../../styles/mixins" as mixin;
 
 .form {
     display: flex;
@@ -56,13 +56,13 @@
 
     &__button {
         background-color: v.$blue;
-        font-size: 1.125rem;
+        font-size: 1rem;
         font-weight: 600;
         text-transform: uppercase;
         color: v.$grey;
         border: none;
         border-radius: 100px;
-        padding: 1rem 2rem;
+        padding: 1rem 1.5rem;
         cursor: pointer;
 
         &:hover {

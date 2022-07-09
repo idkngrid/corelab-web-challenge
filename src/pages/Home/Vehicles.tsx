@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import styles from './Vehicles.module.scss';
 import { Plus, MagnifyingGlass, Sliders } from 'phosphor-react'
 import { Link } from 'react-router-dom'
-import { Button } from '../components/Button'
-import { Container } from '../components/Container'
-import { Card } from '../components/Card';
+import { Button } from '../../components/Button/Button'
+import { Card } from '../../components/Card/Card';
 
-import api from '../lib/api';
+import api from '../../lib/api';
 
 interface Vehicle {
     title: String;
@@ -29,14 +28,14 @@ export function Vehicles() {
     })
 
     return (
-        <Container>
+        <div className={styles.home__container}>
             <div className={styles.search}>
                 <header className={styles.search__header}>
                     <div className={styles.search__wrapper}>
                         <span>
                             <MagnifyingGlass size={20} weight="light" className={styles.search__glass} />
                         </span>
-                        <input type="text" className={styles.search__input} />
+                        <input type="text" placeholder="Buscar" className={styles.search__input} />
                         <Link to={'/filter'}>
                             <Sliders size={40} weight="light" className={styles.search__sliders} />
                         </Link>
@@ -49,18 +48,19 @@ export function Vehicles() {
 
             <div className={styles.card__container}>
                 {vehicles.length > 0 &&
-                    vehicles.map((vehicle) => (
+                    vehicles.map((vehicle, key) => (
                         <Card
+                            key={key}
                             title={vehicle.title} 
-                            description={'descricao'} 
-                            color={'cor'}
-                            year={1}
-                            price={1}
-                            isFavorite={false}
+                            description={vehicle.description} 
+                            color={vehicle.color}
+                            year={vehicle.year}
+                            price={vehicle.price}
+                            isFavorite={vehicle.isFavorite}
                         />
                     ))
                 }
             </div>
-        </Container>
+        </div>
     )
 }

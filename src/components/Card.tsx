@@ -25,7 +25,7 @@ export function Card({ title, description, color, year, price, isFavorite }: Car
                 </span>
             </header>
             <div>
-                <p>{title}</p>
+                <h2>{title}</h2>
                 <p>{price.toString()}</p>
                 <p>{description}</p>
                 <p>{year.toString()}</p>

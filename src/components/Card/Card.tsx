@@ -1,31 +1,56 @@
-import { Pencil, Heart, X, Pen } from 'phosphor-react';
+import { Pencil, Heart, X, Pen, CodeSimple } from 'phosphor-react';
 import { useState } from 'react';
 import styles from './Card.module.scss';
 
+import api from '../../lib/api';
+import { useNavigate } from 'react-router-dom';
+
 interface CardProps {
+    id: Number;
     title: String;
     description: String;
     color: String;
     year: Number;
+    plate: String;
     price: Number;
     isFavorite: Boolean;
 }
 
-export function Card({ title, description, color, year, price, isFavorite }: CardProps) {
+export function Card({ id, title, description, color, year, price, isFavorite }: CardProps) {
+    const navigate = useNavigate();
     const [isCardFavorite, setIsCardFavorite] = useState(false);
 
     function handleFavorite() {
         setIsCardFavorite(!isCardFavorite);
     }
 
+    async function handleDelete(id: Number) {
+        try {
+            await api.delete(`/vehicle/${id}`);
+            alert('Veículo deletado com sucesso!')
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div className={styles.card}>
             <header className={styles.card__header}>
                 <button>
-                    <Pencil size={32} />
+                    <Pencil 
+                        size={32}
+                        onClick={() => navigate(`/update/${id}`)}
+                    />
                 </button>
                 <button>
-                    <X size={32} />
+                    <X 
+                        size={32}
+                        onClick={() => {
+                            handleDelete(id);
+                            window.location.reload();
+                            alert('Veículo deletado com sucesso!')
+                        }}
+                    />
                 </button>
                 <button
                     onClick={handleFavorite}

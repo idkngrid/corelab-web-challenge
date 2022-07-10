@@ -1,12 +1,28 @@
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import styles from './VehicleForm.module.scss';
+
+import { useNavigate } from 'react-router-dom';
 
 interface VehicleFormProps {
     handleSubmit: Function;
 }
 
 export function VehicleForm({handleSubmit}: VehicleFormProps) {
+    const navigate = useNavigate();
+
+    const [vehicle, setVehicle] = useState({});
+
+    const submit = (e: ChangeEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        handleSubmit(vehicle);
+    }
+
+    function handleChange(e: ChangeEvent<HTMLInputElement>){
+        setVehicle({ ...vehicle, [e.target.name]: e.target.value });
+    }
+
     return (
-        <form action="" className={styles.form}>
+        <form action="" className={styles.form} onSubmit={submit}>
             <div className={styles.form__wrapper}>
                 <div className={styles.form__item}>
                     <label className={styles.form__label}>
@@ -15,7 +31,8 @@ export function VehicleForm({handleSubmit}: VehicleFormProps) {
                     <input 
                         className={styles.form__input}
                         type="text" 
-                        // onChange={event => setTitle(event.target.value)}
+                        name="title"
+                        onChange={handleChange}
                     />
                 </div>
 
@@ -26,7 +43,32 @@ export function VehicleForm({handleSubmit}: VehicleFormProps) {
                     <input 
                         className={styles.form__input}
                         type="text" 
-                        // onChange={event => setBrand(event.target.value)}
+                        name="brand"
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className={styles.form__item}>
+                    <label className={styles.form__label}>
+                        Descrição:{''}
+                    </label>
+                    <input 
+                        className={styles.form__input}
+                        type="text" 
+                        name="description"
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className={styles.form__item}>
+                    <label className={styles.form__label}>
+                        Valor:{''}
+                    </label>
+                    <input 
+                        className={styles.form__input}
+                        type="text" 
+                        name="price"
+                        onChange={handleChange}
                     />
                 </div>
 
@@ -37,7 +79,8 @@ export function VehicleForm({handleSubmit}: VehicleFormProps) {
                     <input 
                         className={styles.form__input}
                         type="text" 
-                        // onChange={event => setColor(event.target.value)}
+                        name="color"
+                        onChange={handleChange}
                     />
                 </div>
 
@@ -48,7 +91,8 @@ export function VehicleForm({handleSubmit}: VehicleFormProps) {
                     <input 
                         className={styles.form__input}
                         type="text" 
-                        // onChange={event => setYear(event.target.value)}
+                        name="year"
+                        onChange={handleChange}
                     />
                 </div>
 
@@ -59,12 +103,14 @@ export function VehicleForm({handleSubmit}: VehicleFormProps) {
                     <input 
                         className={styles.form__input}
                         type="text" 
-                        // onChange={event => setPlate(event.target.value)}
+                        name="plate"
+                        onChange={handleChange}
                     />
                 </div>
             </div>
             <footer className={styles.form__footer}>
                 <button 
+                    type='submit'
                     className={styles.form__button}
                 >
                     salvar

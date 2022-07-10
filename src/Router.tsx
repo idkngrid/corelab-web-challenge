@@ -11,7 +11,7 @@ export function Router() {
             <Route path="/" element={<Vehicles />} />
             <Route path="/vehicles" element={<Vehicles />} />
             <Route path="/add" element={<NewVehicle />} />
-            <Route path="/update" element={<UpdateVehicle />} />
+            <Route path="/update/:id" element={<UpdateVehicle />} />
             <Route path="/filter" element={<Filter />} />
         </Routes>
     )

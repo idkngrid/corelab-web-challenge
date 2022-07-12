@@ -7,21 +7,27 @@ import { useNavigate } from 'react-router-dom';
 
 interface CardProps {
     id: Number;
-    title: String;
+    name: String;
     description: String;
     color: String;
-    year: Number;
+    year: String;
     plate: String;
-    price: Number;
+    price: String;
     isFavorite: Boolean;
 }
 
-export function Card({ id, title, description, color, year, price, isFavorite }: CardProps) {
+export function Card({ id, name, description, color, year, price, isFavorite }: CardProps) {
     const navigate = useNavigate();
     const [isCardFavorite, setIsCardFavorite] = useState(false);
 
     function handleFavorite() {
         setIsCardFavorite(!isCardFavorite);
+
+        if(isCardFavorite) {
+            isFavorite = false;
+        } else {
+            isFavorite = true;
+        }
     }
 
     async function handleDelete(id: Number) {
@@ -59,7 +65,7 @@ export function Card({ id, title, description, color, year, price, isFavorite }:
                 </button>
             </header>
             <div className={styles.card__content}>
-                <h2>{title}</h2>
+                <h2>{name}</h2>
                 <p>Preço: {price.toString()}</p>
                 <p>Descrição: {description}</p>
                 <p>Ano: {year.toString()}</p>

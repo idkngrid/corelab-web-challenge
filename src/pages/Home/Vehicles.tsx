@@ -1,27 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, SetStateAction } from 'react';
 import styles from './Vehicles.module.scss';
-import { Plus, MagnifyingGlass, Sliders } from 'phosphor-react'
+import { MagnifyingGlass, Sliders } from 'phosphor-react'
 import { Link } from 'react-router-dom'
 import { Button } from '../../components/Button/Button'
 import { Card } from '../../components/Card/Card';
 
+import { IVehicle } from '../../types/Vehicle';
 import api from '../../lib/api';
 
-interface Vehicle {
-    id: Number;
-    title: String;
-    description: String;
-    color: String;
-    year: Number;
-    plate: String;
-    price: Number;
-    isFavorite: Boolean;
-}
-
 export function Vehicles() {
-    const [vehicles, setVehicles] = useState<Vehicle[]>([]);
-    // const [favorites, setFavorites] = useState([])
-    // const [ads, setAds] = useState([]);
+    const [vehicles, setVehicles] = useState<IVehicle[]>([]);
+    const [search, setSearch] = useState<string>("");
+    const [filteredResults, setFilteredResults] = useState<IVehicle[]>([]);
 
     const getVehicles = () => {
         api.get("/vehicles")
@@ -33,18 +23,18 @@ export function Vehicles() {
 
     useEffect(getVehicles, []);
 
-    // const adsData = [];
-    // const favoriteAds = [];
-
-    // vehicles.map(vehicle => {
-    //     if(vehicle.isFavorite === true) {
-    //         favoriteAds.push(vehicle);
-    //     } else {
-    //         adsData.push(vehicle);
-    //     }
-    // })
-    // setAds(adsData);
-    // setFavorites(favoriteAds);
+    const searchItems = (searchValue: string) => {
+        setSearch(searchValue);
+        if (search !== '') {
+          const filteredData = vehicles.filter((item) => {
+            return Object.values(item).join('').toLowerCase().includes(search.toLowerCase())
+          })
+          setFilteredResults(filteredData);
+        }
+        else {
+          setFilteredResults(vehicles)
+        }
+      }
 
     return (
         <div className={styles.home__container}>
@@ -54,7 +44,12 @@ export function Vehicles() {
                         <span>
                             <MagnifyingGlass size={20} weight="light" className={styles.search__glass} />
                         </span>
-                        <input type="text" placeholder="Buscar" className={styles.search__input} />
+                        <input 
+                            className={styles.search__input} 
+                            type="text" 
+                            placeholder="Buscar" 
+                            onChange={(e) => searchItems(e.target.value)}
+                        />
                         <Link to={'/filter'}>
                             <Sliders size={40} weight="light" className={styles.search__sliders} />
                         </Link>
@@ -66,12 +61,12 @@ export function Vehicles() {
             </div>
 
             <div className={styles.card__container}>
-                {vehicles.length > 0 &&
-                    vehicles.map((vehicle, key) => (
+                {search.length > 1 ? (
+                    filteredResults.map((vehicle, index) => (
                         <Card
-                            key={key}
+                            key={index}
                             id={vehicle.id}
-                            title={vehicle.title} 
+                            name={vehicle.name} 
                             description={vehicle.description} 
                             color={vehicle.color}
                             year={vehicle.year}
@@ -80,7 +75,20 @@ export function Vehicles() {
                             isFavorite={vehicle.isFavorite}
                         />
                     ))
-                }
+                ) : (
+                    vehicles.map((vehicle, index) => (
+                        <Card
+                            key={index}
+                            id={vehicle.id}
+                            name={vehicle.name} 
+                            description={vehicle.description} 
+                            color={vehicle.color}
+                            year={vehicle.year}
+                            plate={vehicle.plate}
+                            price={vehicle.price}
+                            isFavorite={vehicle.isFavorite}
+                        />
+                    )))}
             </div>
         </div>
     )

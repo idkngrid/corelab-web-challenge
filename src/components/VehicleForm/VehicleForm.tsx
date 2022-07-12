@@ -1,18 +1,17 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import styles from './VehicleForm.module.scss';
 
-import { useNavigate } from 'react-router-dom';
+import { IVehicle } from '../../types/Vehicle';
 
 interface VehicleFormProps {
     handleSubmit: Function;
+    vehicleData?: any;
 }
 
-export function VehicleForm({handleSubmit}: VehicleFormProps) {
-    const navigate = useNavigate();
+export function VehicleForm({handleSubmit, vehicleData}: VehicleFormProps) {
+    const [vehicle, setVehicle] = useState<IVehicle>(vehicleData || {});
 
-    const [vehicle, setVehicle] = useState({});
-
-    const submit = (e: ChangeEvent<HTMLFormElement>) => {
+    const submit = (e: FormEvent) => {
         e.preventDefault();
         handleSubmit(vehicle);
     }
@@ -26,84 +25,91 @@ export function VehicleForm({handleSubmit}: VehicleFormProps) {
             <div className={styles.form__wrapper}>
                 <div className={styles.form__item}>
                     <label className={styles.form__label}>
-                        Nome:{''}
+                        Nome:
                     </label>
                     <input 
                         className={styles.form__input}
                         type="text" 
-                        name="title"
+                        name="name"
+                        value={vehicle.name ? vehicle.name : ''}
                         onChange={handleChange}
                     />
                 </div>
 
                 <div className={styles.form__item}>
                     <label className={styles.form__label}>
-                        Marca:{''}
-                    </label>
-                    <input 
-                        className={styles.form__input}
-                        type="text" 
-                        name="brand"
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <div className={styles.form__item}>
-                    <label className={styles.form__label}>
-                        Descrição:{''}
+                        Descrição:
                     </label>
                     <input 
                         className={styles.form__input}
                         type="text" 
                         name="description"
+                        value={vehicle.description ? vehicle.description : ''}
                         onChange={handleChange}
                     />
                 </div>
 
                 <div className={styles.form__item}>
                     <label className={styles.form__label}>
-                        Valor:{''}
+                        Marca:
                     </label>
                     <input 
                         className={styles.form__input}
                         type="text" 
-                        name="price"
+                        name="brand"
+                        value={vehicle.brand ? vehicle.brand : ''}
                         onChange={handleChange}
                     />
                 </div>
 
                 <div className={styles.form__item}>
                     <label className={styles.form__label}>
-                        Cor:{''}
+                        Cor:
                     </label>
                     <input 
                         className={styles.form__input}
                         type="text" 
                         name="color"
+                        value={vehicle.color ? vehicle.color : ''}
                         onChange={handleChange}
                     />
                 </div>
 
                 <div className={styles.form__item}>
                     <label className={styles.form__label}>
-                        Ano:{''}
+                        Preço:
+                    </label>
+                    <input 
+                        className={styles.form__input}
+                        type="text" 
+                        name="price"
+                        value={vehicle.price ? vehicle.price : ''}
+                        onChange={handleChange}
+                    />
+                </div>
+
+                <div className={styles.form__item}>
+                    <label className={styles.form__label}>
+                        Ano:
                     </label>
                     <input 
                         className={styles.form__input}
                         type="text" 
                         name="year"
+                        value={vehicle.year ? vehicle.year : ''}
                         onChange={handleChange}
                     />
                 </div>
 
                 <div className={styles.form__item}>
                     <label className={styles.form__label}>
-                        Placa:{''}
+                        Placa:
                     </label>
                     <input 
                         className={styles.form__input}
                         type="text" 
                         name="plate"
+                        value={vehicle.plate ? vehicle.plate : ''}
                         onChange={handleChange}
                     />
                 </div>

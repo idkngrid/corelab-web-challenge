@@ -1,40 +1,31 @@
-import { FormEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Arrow } from "../../components/GoBackButton/GoBackButton";
 import { VehicleForm } from "../../components/VehicleForm/VehicleForm";
 
+import { IVehicle } from '../../types/Vehicle';
 import api from "../../lib/api";
-
-interface Vehicle {
-    id: Number;
-    title: String;
-    description: String;
-    color: String;
-    year: Number;
-    price: Number;
-    isFavorite: Boolean;
-}
-
 
 export function UpdateVehicle() {
     const navigate = useNavigate();
-    const [vehicle, setVehicle] = useState<Vehicle[]>([]);
+    const [vehicle, setVehicle] = useState({});
+    
+    const { id } = useParams();
 
     useEffect(() => {
-        api.get(`/vehicles/${}`)
+        api.get(`/vehicle/${id}`)
             .then(response => {
                 setVehicle(response.data);
             })
             .catch(err => console.log(err));
-    })
+    }, [id])
 
-    async function updateVehicle(vehicle) {
+    async function updateVehicle(vehicle: IVehicle) {
         try {
-            api.put(`/update/${id}`)
+            // await api.put(`/update/${vehicle.id}`)
         } catch (error) {
             console.log(error);
         }
-
         navigate('/');
     }
 
@@ -43,6 +34,7 @@ export function UpdateVehicle() {
             <Arrow />
             <VehicleForm   
                 handleSubmit={updateVehicle}
+                vehicleData={vehicle}
             />
         </div>
     )

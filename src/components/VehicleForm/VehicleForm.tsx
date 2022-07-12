@@ -9,7 +9,8 @@ interface VehicleFormProps {
 }
 
 export function VehicleForm({handleSubmit, vehicleData}: VehicleFormProps) {
-    const [vehicle, setVehicle] = useState<IVehicle>(vehicleData || {});
+    const [vehicle, setVehicle] = useState(vehicleData || {});
+
 
     const submit = (e: FormEvent) => {
         e.preventDefault();

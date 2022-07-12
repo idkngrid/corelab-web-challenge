@@ -1,7 +1,6 @@
-import { useState, useEffect, SetStateAction } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Vehicles.module.scss';
 import { MagnifyingGlass, Sliders } from 'phosphor-react'
-import { Link } from 'react-router-dom'
 import { Button } from '../../components/Button/Button'
 import { Card } from '../../components/Card/Card';
 
@@ -50,9 +49,9 @@ export function Vehicles() {
                             placeholder="Buscar" 
                             onChange={(e) => searchItems(e.target.value)}
                         />
-                        <Link to={'/filter'}>
+                        <div>
                             <Sliders size={40} weight="light" className={styles.search__sliders} />
-                        </Link>
+                        </div>
                     </div>
                 </header>
                 <Button 

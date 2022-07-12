@@ -1,7 +1,7 @@
 import { ArrowLeft } from 'phosphor-react';
 import styles from './GoBackButton.module.scss';
 
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export function Arrow() {
     const navigate = useNavigate();

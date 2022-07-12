@@ -1,4 +1,4 @@
-import { Pencil, Heart, X, Pen, CodeSimple } from 'phosphor-react';
+import { Pencil, Heart, X} from 'phosphor-react';
 import { useState } from 'react';
 import styles from './Card.module.scss';
 

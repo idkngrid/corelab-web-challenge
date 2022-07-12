@@ -7,26 +7,31 @@ import { IVehicle } from '../../types/Vehicle';
 import api from "../../lib/api";
 
 export function UpdateVehicle() {
+    const { id } = useParams();
     const navigate = useNavigate();
     const [vehicle, setVehicle] = useState({});
-    
-    const { id } = useParams();
 
     useEffect(() => {
         api.get(`/vehicle/${id}`)
-            .then(response => {
-                setVehicle(response.data);
-            })
-            .catch(err => console.log(err));
+        .then(response => {
+            setVehicle(response.data);            
+        })
+        .catch(err => console.log(err));
     }, [id])
 
-    async function updateVehicle(vehicle: IVehicle) {
+    function updateVehicle(vehicle: IVehicle) {
         try {
-            // await api.put(`/update/${vehicle.id}`)
+            api.put(`/vehicle/${vehicle.id}`, {
+                ...vehicle,
+                isFavorite: vehicle.isFavorite
+            })
+            .then(res => setVehicle(res.data));
         } catch (error) {
             console.log(error);
         }
-        navigate('/');
+        navigate("/");
+        alert('Veículo atualizado com sucesso!')
+        window.location.reload();
     }
 
     return (
